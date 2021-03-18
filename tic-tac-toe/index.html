@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            position: relative;
+            background: #252530;
+            margin: 0;
+        }
+
+        .game {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 300px;
+            height: 400px;
+        }
+
+        .judge {
+            text-align: center;
+            color: #fff;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            font-size: 36px;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px;
+            letter-spacing: 1px;
+        }
+
+        .judge-verdict {
+            color: #ffb400;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+        }
+
+        .field {
+            border-right: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            padding: 12px;
+        }
+
+        .field:nth-child(1) {
+            box-shadow: inset -6px -6px 6px -6px #fff
+        }
+
+        .field:nth-child(2) {
+            box-shadow: inset 0 -6px 6px -7px #fff, inset -6px 0 6px -7px #fff, inset 6px 0 6px -7px #fff;
+        }
+
+        .field:nth-child(3) {
+            box-shadow: inset 6px -6px 6px -6px #fff;
+        }
+
+        .field:nth-child(4) {
+            box-shadow: inset 0 -6px 6px -7px #fff, inset -6px 0 6px -7px #fff, inset 0 6px 6px -7px #fff;
+        }
+
+        .field:nth-child(5) {
+            box-shadow: inset 0 0 6px 0 #fff;
+        }
+
+        .field:nth-child(6) {
+            box-shadow: inset 0 -6px 6px -7px #fff, inset 6px 0 6px -7px #fff, inset 0 6px 6px -7px #fff;
+        }
+
+        .field:nth-child(7) {
+            box-shadow: inset -6px 6px 6px -6px #fff;
+        }
+
+        .field:nth-child(8) {
+            box-shadow: inset 0 6px 6px -7px #fff, inset -6px 0 6px -7px #fff, inset 6px 0 6px -7px #fff;
+        }
+
+        .field:nth-child(9) {
+            box-shadow: inset 6px 6px 6px -6px #fff;
+        }
+
+        .field:nth-child(3),
+        .field:nth-child(6),
+        .field:nth-child(9) {
+            border-right: unset;
+        }
+
+        .field:nth-child(7),
+        .field:nth-child(8),
+        .field:nth-child(9) {
+            border-bottom: unset;
+        }
+
+        .field-holder {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            border-radius: 100%;
+            background: #272732;
+            box-shadow: 2px 5px 5px;
+            transition: .15s ease-out;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .field-holder:hover {
+            background: #2f2f3e;
+            transform: scale(1.1);
+        }
+
+        .mark {
+            color: #fff;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 34px;
+            height: 52px;
+            font-size: 56px;
+            font-weight: bold;
+            line-height: 1;
+            text-shadow: 1px 1px 1px;
+        }
+
+        .mark-gold {
+            color: #ffb400;
+        }
+
+        .button-holder {
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .button {
+            background: #272732;
+            box-shadow: 2px 5px 5px #000;
+            font-size: 24px;
+            color: #fff;
+            text-shadow: 1px 1px 1px;
+            padding: 6px 18px 0;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: .15s ease-out;
+        }
+
+        .button:hover {
+            background: #2f2f3e;
+            transform: scale(1.1);
+            color: #ffb400;
+        }
+    </style>
+</head>
+<body>
+<div ng-app="app">
+    <div class="game" ng-controller="GameController">
+        <div class="judge" ng-if="winner === null">Player: <span class="judge-verdict">{{ player }}</span></div>
+        <div class="judge" ng-if="winner !== null"><span class="judge-verdict">{{ winner }}</span> won!</div>
+        <div class="board">
+            <div class="field">
+                <div class="field-holder" ng-click="setField(0)">
+                    <div ng-class="{'mark': true, 'mark-gold': winSequence.includes(0)}">{{ board[0] }}</div>
+                </div>
+            </div>
+            <div class="field">
+                <div class="field-holder" ng-click="setField(1)">
+                    <div ng-class="{'mark': true, 'mark-gold': winSequence.includes(1)}">{{ board[1] }}</div>
+                </div>
+            </div>
+            <div class="field">
+                <div class="field-holder" ng-click="setField(2)">
+                    <div ng-class="{'mark': true, 'mark-gold': winSequence.includes(2)}">{{ board[2] }}</div>
+                </div>
+            </div>
+            <div class="field">
+                <div class="field-holder" ng-click="setField(3)">
+                    <div ng-class="{'mark': true, 'mark-gold': winSequence.includes(3)}">{{ board[3] }}</div>
+                </div>
+            </div>
+            <div class="field">
+                <div class="field-holder" ng-click="setField(4)">
+                    <div ng-class="{'mark': true, 'mark-gold': winSequence.includes(4)}">{{ board[4] }}</div>
+                </div>
+            </div>
+            <div class="field">
+                <div class="field-holder" ng-click="setField(5)">
+                    <div ng-class="{'mark': true, 'mark-gold': winSequence.includes(5)}">{{ board[5] }}</div>
+                </div>
+            </div>
+            <div class="field">
+                <div class="field-holder" ng-click="setField(6)">
+                    <div ng-class="{'mark': true, 'mark-gold': winSequence.includes(6)}">{{ board[6] }}</div>
+                </div>
+            </div>
+            <div class="field">
+                <div class="field-holder" ng-click="setField(7)">
+                    <div ng-class="{'mark': true, 'mark-gold': winSequence.includes(7)}">{{ board[7] }}</div>
+                </div>
+            </div>
+            <div class="field">
+                <div class="field-holder" ng-click="setField(8)">
+                    <div ng-class="{'mark': true, 'mark-gold': winSequence.includes(8)}">{{ board[8] }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="button-holder" ng-if="winner !== null">
+            <button class="button" ng-click="startGame()">AGAIN</button>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"
+        integrity="sha512-7oYXeK0OxTFxndh0erL8FsjGvrl2VMDor6fVqzlLGfwOQQqTbYsGPv4ZZ15QHfSk80doyaM0ZJdvkyDcVO7KFA=="
+        crossorigin="anonymous"></script>
+<script>
+    angular.module( "app", [] ).controller( "GameController", GameController )
+
+    const allEqualsAndNotNull = ( ...arr ) => {
+        if ( arr.length === 0 ) return true
+
+        if ( arr[ 0 ] === null ) return false
+        for ( let i = 1; i < arr.length; i++ ) {
+            if ( arr[ i ] === null || arr[ i - 1 ] !== arr[ i ] ) return false
+        }
+
+        return true
+    }
+
+    function GameController( $scope ) {
+        $scope.startGame = () => {
+            $scope.winner = null
+            $scope.board = Array.from( { length: 9 }, () => null )
+            $scope.player = Math.ceil( Math.random() * 100 ) % 2 === 0 ? "o" : "x"
+            $scope.winSequence = []
+        }
+        $scope.setField = ( index ) => {
+            if ( $scope.winner === null && $scope.board[ index ] === null ) {
+                $scope.board[ index ] = $scope.player
+                $scope.checkWinner()
+
+                if ( $scope.winner === null ) {
+                    $scope.player === "o" ? $scope.player = "x" : $scope.player = "o"
+                }
+            }
+        }
+        $scope.checkWinner = () => {
+            if (
+                $scope.checkSequence( 0, 1, 2 ) ||
+                $scope.checkSequence( 3, 4, 5 ) ||
+                $scope.checkSequence( 6, 7, 8 ) ||
+                $scope.checkSequence( 0, 3, 6 ) ||
+                $scope.checkSequence( 1, 4, 7 ) ||
+                $scope.checkSequence( 2, 5, 8 ) ||
+                $scope.checkSequence( 0, 4, 8 ) ||
+                $scope.checkSequence( 2, 4, 6 )
+            ) {
+                $scope.winner = $scope.player
+            }
+        }
+        $scope.checkSequence = ( ...arr ) => {
+            if ( arr.length === 0 ) return false
+
+            if ( $scope.board[ arr[ 0 ] ] === null ) return false
+            for ( let i = 1; i < arr.length; i++ ) {
+                if ( $scope.board[ arr[ i ] ] === null || $scope.board[ arr[ i - 1 ] ]  !== $scope.board[ arr[ i ] ] ) return false
+            }
+
+            $scope.winSequence = arr
+            return true
+        }
+        $scope.startGame()
+    }
+</script>
+</body>
+</html>
