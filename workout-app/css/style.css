@@ -1,0 +1,248 @@
+:root {
+    --background: #282d32;
+    --card-bg: #282d32;
+    --card-title-bg: #406070;
+    --pedestal-bg: #30363b; /* #323a41; */
+}
+
+body {
+    background: var(--background);
+    font-family: Rubik;
+    color: #fff;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, min-content);
+    grid-gap: 16px;
+    padding: 16px 8px;
+}
+
+.left-pane {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+.main-pane {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.right-pane {
+    grid-row: 3;
+    grid-column: 1;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 0 7px #000;
+    border: 1px solid #666;
+    margin-bottom: 16px;
+    background: var(--card-bg);
+    overflow: hidden;
+}
+
+.card .card-title {
+    background: var(--card-title-bg);
+    padding: 8px 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.card .card-body {
+    padding: 0 16px;
+    line-height: 1.25;
+}
+
+.main-header {
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 36px;
+    line-height: 1;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.progress {
+    text-align: center;
+}
+
+.progress .progress-label {
+    width: 100%;
+    color: #333;
+    font-size: 1.2em;
+}
+
+.progress .progress-bar {
+    position: relative;
+    background: #f6f6f6;
+    border-radius: 7px;
+    padding: 10px;
+    box-shadow: inset 0 -1px 5px #000;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.progress .progress-value {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: -1;
+}
+
+.progress .progress-value {
+    display: block;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: rgb(43, 194, 83);
+    background-image: linear-gradient(90deg, #3dcdb5 37%, #32c22b 69%);
+    /*background-image: linear-gradient( center bottom, #2BC253 37% #54F054 69%);*/
+    box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3), inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+    /*position: relative;*/
+    /*overflow: hidden;*/
+}
+
+.progress .progress-value:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: linear-gradient(
+            -45deg,
+            rgba(255, 255, 255, 0.2) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.2) 50%,
+            rgba(255, 255, 255, 0.2) 75%,
+            transparent 75%,
+            transparent
+    );
+    z-index: 1;
+    background-size: 50px 50px;
+    animation: progress-move 2s linear infinite;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    overflow: hidden;
+}
+
+.workout {
+    position: relative;
+    text-align: center;
+    margin-bottom: 40px;
+    /*height: 400px;*/
+}
+
+.workout-pose {
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1;
+    max-width: 75%;
+    height: auto;
+}
+
+.workout .workout-pedestal {
+    width: 70%;
+    height: 100px;
+    background: red;
+    margin: auto;
+    background: var(--pedestal-bg);
+    border-radius: 100%;
+    box-shadow: black 0px 0px 1px,
+    black 0px 4px 1px,
+    black 0px 8px 1px,
+    black 0px 12px 1px,
+    black 0px 16px 15px 2px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -20px;
+}
+
+.link-white {
+    color: #fff;
+}
+
+.link-white:hover {
+    color: teal;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.video-space {
+    padding-top: 16px;
+}
+
+.video-space:last-child {
+    padding-bottom: 8px;
+}
+
+.display {
+    padding: 8px 16px;
+}
+
+.display .display-current {
+    padding-bottom: 16px;
+    text-align: center;
+}
+
+
+.display .display-next {
+    text-align: center;
+}
+
+.exercise-name {
+    text-align: center;
+}
+
+@media only screen and (min-width: 986px ) {
+    /*@media screen and ( min-width: var( --lg-screen-size ) ) {*/
+    .wrapper {
+        grid-template-columns: 1fr 3fr 1fr;
+        grid-template-rows: 1fr;
+    }
+
+    .left-pane {
+        grid-row: 1;
+        grid-column: 1;
+    }
+
+    .main-pane {
+        grid-row: 1;
+        grid-column: 2;
+    }
+
+    .right-pane {
+        grid-row: 1;
+        grid-column: 3;
+    }
+
+    .display {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .display .display-current {
+        padding-bottom: 0;
+        text-align: left;
+    }
+    .display .display-next {
+        text-align: right;
+    }
+}
+
+@keyframes progress-move {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 50px 50px;
+    }
+}
